@@ -42,8 +42,32 @@ end
 In your rack app:
 
 ```ruby
-use ::Midpay[:foo], YOUR_APPID, YOUR_KEY, :request_params_proc => {|params| BarModel.find(params[:id]) }
+use ::Midpay[:foo], YOUR_APPID, YOUR_KEY, :request_params_proc => {|params| 
+  obj = BarModel.find(params[:bar_id])
+  {
+    :key1 => obj.value1,
+    :key2 => obj.value2
+    # all of the params to be sent to your payment gateway on request phase
+  } 
+}
 ```
+
+Send a request to Payment Gateway:
+
+```ruby
+get '/midpay/foo?bar_id=123'
+```
+
+Handle gateway callback request in your controller:
+```ruby
+  def callback
+    current_strategy = request.env['midpay.strategy']
+    callback_data = request.env['midpay.callback']
+    # handle the callback logic
+  end
+```
+
+For more details at WIKI
 
 ## Contributing
 
