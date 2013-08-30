@@ -1,6 +1,6 @@
 # Midpay
 
-A Rack Middleware for E-Commerce Payment Base-Strategy;
+A Rack Middleware for E-Commerce Payment Base-Strategy
 
 ## Installation
 
