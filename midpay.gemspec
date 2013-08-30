@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Midpay::VERSION
   spec.authors       = ["xixilive"]
   spec.email         = ["xixilive@gmail.com"]
-  spec.description   = %q{midpay}
-  spec.summary       = %q{midpay}
-  spec.homepage      = ""
+  spec.description   = %q{A Rack Middleware for E-Commerce Payment Base-Strategy}
+  spec.summary       = %q{A Rack Middleware for E-Commerce Payment Base-Strategy}
+  spec.homepage      = "https://github.com/xixilive/midpay"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
