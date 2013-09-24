@@ -1,5 +1,7 @@
 # Midpay
 
+[![Code Climate](https://codeclimate.com/github/xixilive/midpay.png)](https://codeclimate.com/github/xixilive/midpay)
+
 A Rack Middleware for E-Commerce Payment Base-Strategy
 
 ## Installation
