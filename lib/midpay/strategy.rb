@@ -65,15 +65,20 @@ module Midpay
 
     attr_reader :app, :env, :options, :arguments
 
+    # Usage
+    # Strategy.new app, 'APP_KEY', 'APP_SECRET', &block
+    # Strategy.new app, :app_key => 'APP_KEY', :app_secret => 'APP_SECRET', &block
+    # Strategy.new app, :app_key => 'APP_KEY', :app_secret => 'APP_SECRET', :request_params_proc => PROC
+    # Strategy.new app, 'APP_KEY', 'APP_SECRET', :request_params_proc => PROC
     def initialize app, *args, &block
-      @app, @env = app, nil
+      @app, @env, @options = app, nil, self.class.default_options.dup
       opts = args.last.is_a?(::Hash) ? args.pop : {}
-      @options = self.class.default_options.dup
+      options.request_params_proc = block if block_given?
+      options.app_key, options.app_secret = args.slice!(0,2)
       [:app_key, :app_secret, :request_params_proc].each do |k|
-        options[k] = opts.delete(k)
+        options[k] ||= opts.delete(k) if opts[k]
       end
       @arguments = self.class.default_arguments.dup.merge(opts)
-      options.request_params_proc ||= block
     end
 
     def call(env)

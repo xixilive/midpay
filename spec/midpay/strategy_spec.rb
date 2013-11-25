@@ -34,6 +34,22 @@ describe TestStrategy do
     TestStrategy.new(inner_app, :app_key => "APPKEY", :app_secret => "APPSECRET", :request_params_proc => request_params_proc)
   }
 
+  it 'should be initialized with arbitrarily arguments' do
+    st = TestStrategy.new(inner_app, 'key', 'secret') do |params|
+      params
+    end
+    expect(st.options.app_key).to eq 'key'
+    expect(st.options.app_secret).to eq 'secret'
+    expect(st.options.request_params_proc.call({key: 'value'})).to eq({key: 'value'})
+
+    st = TestStrategy.new(inner_app, 'key', :app_secret => 'secret') do |params|
+      params
+    end
+    expect(st.options.app_key).to eq 'key'
+    expect(st.options.app_secret).to eq 'secret'
+    expect(st.options.request_params_proc.call({key: 'value'})).to eq({key: 'value'})
+  end
+
   it "on request phase" do
     get '/midpay/test'
     expect(last_response.body).to eq("You are being redirected to /?return_url=/return&callback=http://example.org/midpay/test/callback")
